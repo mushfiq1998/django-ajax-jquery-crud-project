@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'enroll/css/bootstrap.css' %}" />
+    <title>Django Ajax CRUD</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center alert alert-danger">
+            Django Ajax JQuery Bootstrap5 CRUD Project
+        </h2>
+        <div class="row">
+            <div class="col-sm-4">
+                <h4 class="text-center alert alert-info">
+                    Add/Update Student
+                </h4>
+                <form action="" method="post">
+                    {% csrf_token %} 
+                    <input type="hidden" name="stuid" id="stuid" />
+                    {{ form.as_p }}
+                    <input type="button" class="btn btn-success" 
+                        id="btnsave" value="Save" />
+                </form><br />
+                <div id="msg" class="alert alert-danger" style="display: none"></div>
+            </div>
+            <div class="col-sm-7">
+                <h2 class="text-center alert alert-info">
+                    Student Information
+                </h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        {% for student in students %}
+                        <tr>
+                            <td scope="col">{{student.id}}</td>
+                            <td scope="col">{{student.name}}</td>
+                            <td scope="col">{{student.email}}</td>
+                            <td scope="col">{{student.password}}</td>
+                            <td scope="col">
+                                <input type="button" data-sid="{{student.id}}"
+                                    class="btn btn-warning btn-sm btn-edit" 
+                                    value="Edit" />
+                            </td>
+                            <td scope="col">
+                                <input type="button" data-sid="{{student.id}}"
+                                    class="btn btn-danger btn-sm btn-del" 
+                                    value="Delete" />
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'enroll/js/jquery.js' %}"></script>
+    <script src="{% static 'enroll/js/popper.js' %}"></script>
+    <script src="{% static 'enroll/js/bootstrap.js' %}"></script>
+
+    {% include "enroll/ajax.html" %}
+</body>
+</html>
